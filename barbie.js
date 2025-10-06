@@ -111,7 +111,7 @@ function move() {
 }
 
 function gossip() {
-    // check if the numbers are correct
+    //check if the numbers are correct
     //add features
     const gossipMessages = [
         "Вы покрысили с подружками о новых трендах. +5 опыта!",
@@ -161,7 +161,7 @@ function attack() {
         addLog(`Полиция моды критикует ваш наряд! Вы получаете ${enemyDamage} урона.`, 'combat');
         
         if (player.health <= 0) {
-            addLog("Полиция моды арестовала вас за плохой вкус! Игра окончена. Увы, не нужно было надевать низкую посадку", 'combat');
+            addLog("Полиция моды арестовала вас за плохой вкус! Игра окончена. Увы, не нужно было надевать джинсы с низкой посадкой", 'combat');
             player.health = 0;
             combatButtonsElement.style.display = 'none';
         }
