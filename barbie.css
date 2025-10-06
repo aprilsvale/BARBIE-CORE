@@ -23,14 +23,12 @@ body {
     background-color: #df9dd8;
     border-radius: 8px;
     padding: 15px;
-    box-shadow: 0 4px 6px rgba(132, 27, 197, 0.977);
 }
 
 .h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #d21d90;
-    text-shadow: 0 0 5px rgba(150, 49, 164, 0.5);
     font-family: "Crafty Girls";
 }
 
@@ -161,7 +159,7 @@ body {
     justify-content: space-between;
     margin: 10px 0;
     padding: 10px;
-    background-color: rgba(247, 37, 133, 0.2);
+    background-color: #530662;
     border-radius: 5px;
 }
 
