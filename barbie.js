@@ -40,6 +40,29 @@ document.getElementById('flee-btn').addEventListener('click', flee);
 document.getElementById('reset-btn').addEventListener('click', resetGame);
 
 
+const gossip_xp = 50;
+const gossip_strength = 5;
+const police_win_xp = 50;
+const police_flee_xp = 20;
+const bag_defense = 3;
+
+
+const messages = {
+    fleeFail: "Побег не удался! Полиция моды догнала вас.",
+    fleeSuccess: "Вы успешно улизнули от Полиции моды! +20 опыта.",
+    attackSuccess: "Полиция моды побеждена! Вы доказали свой стиль! +50 опыта.",
+    attackDeath: "Полиция моды арестовала вас за плохой вкус! Игра окончена. Увы, не нужно было надевать джинсы с низкой посадкой.",
+    congrats: "ПОЗДРАВЛЯЕМ! Вы достигли 10 уровня и стали иконой стиля Беверли Хиллс!",
+    gameEnd: "ИГРА ЗАВЕРШЕНА! Вы доказали, что достойны быть королевой моды!",
+    meetPolice: "О нет! Вы встретили Полицию моды! Они критикуют ваш наряд!",
+    bagFound: "Вы нашли модную сумочку! Она добавит +2 к защите.",
+    meetSupportGirls: "Вы встретили подруг! Они поддержали ваш стиль. +10 здоровья.",
+    makeupSavesHealth: "Вы обновили макияж и чувствуете себя прекрасно! Здоровье восстановлено.",
+    gameStart: "Вы находитесь в Беверли Хиллс. Отсюда можно отправиться на поиски скидок и обновок.",
+    nailsRestart: "Игра сброшена! Вы отправились на маникюр и вернулись обновленной!",
+    welcomeBarbie: "Добро пожаловать в игру 'Barbie vs. Fashion Police'! Начните исследовать мир моды!",
+}
+
 function addLog(message, type = 'normal') {
     const logEntry = document.createElement('div');
     logEntry.className = `log-entry ${type}`;
@@ -71,9 +94,8 @@ function updateStats() {
 
 function explore() {
     const random = Math.random();
-    //check the random order
     
-    if (random < 0.6) {
+    if (random < 0.3) {
         enemy = {
             name: "Полиция моды",
             health: 30,
@@ -81,13 +103,13 @@ function explore() {
             strength: 8
         };
         showEnemy();
-        addLog("О нет! Вы встретили Полицию моды! Они критикуют ваш наряд!", 'combat');
-    } else if (random < 0.3) {
+        addLog(messages.meetPolice, 'combat');
+    } else if (random < 0.6) {
         item = "Модная сумочка";
         showItem();
-        addLog("Вы нашли модную сумочку! Она добавит +2 к защите.", 'loot');
+        addLog(messages.bagFound, 'loot');
     } else {
-        addLog("Вы встретили подруг! Они поддержали ваш стиль. +10 здоровья.", 'location-change');
+        addLog(messages.meetSupportGirls, 'location-change');
         player.health = Math.min(player.health + 10, player.maxHealth);
         updateStats();
     }
@@ -95,7 +117,6 @@ function explore() {
 
 function move() {
     const locations = [
-        //think about the names
         "Mall", "Maliby Beach", "Disco Hall", "StarBucks", "Chanel Shop"
     ];
     currentLocation = locations[Math.floor(Math.random() * locations.length)];
@@ -111,36 +132,31 @@ function move() {
 }
 
 function gossip() {
-    //check if the numbers are correct
-    //add features
     const gossipMessages = [
-        "Вы покрысили с подружками о новых трендах. +5 опыта!",
-        "Подруги рассказали вам секрет стиля. +3 к силе!",
-        "Вы обменялись модными советами. +7 опыта!"
+        "Вы покрысили с подружками о новых трендах. +50 опыта!",
+        "Подруги рассказали вам секрет стиля. +5 к силе!",
     ];
     const randomMessage = gossipMessages[Math.floor(Math.random() * gossipMessages.length)];
     
     addLog(randomMessage, 'location-change');
     
     if (randomMessage.includes("опыта")) {
-        player.xp += 30;
+        player.xp += gossip_xp;
         checkLevelUp();
-    } else if (randomMessage.includes("силу")) {
-        player.strength += 3;
+    } else if (randomMessage.includes("силе")) {
+        player.strength += gossip_strength;
     }
     
     updateStats();
 }
 
 function rest() {
-    //good
     player.health = player.maxHealth;
-    addLog("Вы обновили макияж и чувствуете себя прекрасно! Здоровье восстановлено.", 'location-change');
+    addLog(messages.makeupSavesHealth, 'location-change');
     updateStats();
 }
 
 function attack() {
-    //check the stats
     if (!enemy) return;
     
     const playerDamage = Math.max(1, player.strength - Math.floor(Math.random() * 3));
@@ -149,8 +165,8 @@ function attack() {
     addLog(`Вы пытаетесь низвергнуть полицию моды стилем и наносите ${playerDamage} урона!`, 'combat');
     
     if (enemy.health <= 0) {
-        addLog("Полиция моды побеждена! Вы доказали свой стиль! +20 опыта.", 'loot');
-        player.xp += 100;
+        addLog(messages.attackSuccess, 'loot');
+        player.xp += police_win_xp;
         checkLevelUp();
         enemy = null;
         hideEnemy();
@@ -161,30 +177,27 @@ function attack() {
         addLog(`Полиция моды критикует ваш наряд! Вы получаете ${enemyDamage} урона.`, 'combat');
         
         if (player.health <= 0) {
-            addLog("Полиция моды арестовала вас за плохой вкус! Игра окончена. Увы, не нужно было надевать джинсы с низкой посадкой", 'combat');
+            addLog(messages.attackDeath, 'combat');
             player.health = 0;
             combatButtonsElement.style.display = 'none';
         }
     }
     
     updateStats();
-    //good
     if (enemy) updateEnemyHealth();
 }
 
 function flee() {
-    //check the random order
     if (Math.random() < 0.7) { 
-        //check the numbers
-        addLog("Вы успешно улизнули от Полиции моды! +20 опыта.", 'location-change');
-        player.xp += 50;
+        addLog(messages.fleeSuccess, 'location-change');
+        player.xp += police_flee_xp;
         checkLevelUp();
         enemy = null;
         hideEnemy();
         showActionButtons();
         updateStats();
     } else {
-        addLog("Побег не удался! Полиция моды догнала вас.", 'combat');
+        addLog(messages.fleeFail, 'combat');
         const enemyDamage = Math.max(1, enemy.strength - Math.floor(Math.random() * player.defense));
         player.health -= enemyDamage;
         addLog(`Вы получаете ${enemyDamage} урона при попытке побега.`, 'combat');
@@ -195,19 +208,17 @@ function flee() {
 
 
 function pickUpItem() {
-    //good
     if (!item) return;
     
     player.inventory.push(item);
-    addLog(`Вы подобрали ${item}! +2 к защите.`, 'loot');
-    player.defense += 2;
+    addLog(`Вы подобрали ${item}! +3 к защите.`, 'loot');
+    player.defense += bag_defense;
     item = null;
     hideItem();
     updateStats();
 }
 
 function checkLevelUp() {
-    //good
     if (player.xp >= player.xpToNextLevel) {
         player.level++;
         player.xp -= player.xpToNextLevel;
@@ -228,7 +239,6 @@ function checkLevelUp() {
 }
 
 function showEnemy() {
-    //check the design
     enemyContainerElement.innerHTML = `
         <div class="enemy">
             <span>${enemy.name}</span>
@@ -257,7 +267,6 @@ function updateEnemyHealth() {
 }
 
 function showItem() {
-    //good
     itemContainerElement.innerHTML = `
         <div class="item-list">
             <div class="inventory-item">
@@ -278,10 +287,9 @@ function showActionButtons() {
 }
 
 function checkWin() {
-    //check if it works properly again
     if (player.level >= 10) {
-        addLog("ПОЗДРАВЛЯЕМ! Вы достигли 10 уровня и стали иконой стиля Беверли Хиллс!", 'loot');
-        addLog("ИГРА ЗАВЕРШЕНА! Вы доказали, что достойны быть королевой моды!", 'loot');
+        addLog(messages.congrats, 'loot');
+        addLog(messages.gameEnd, 'loot');
         
         document.getElementById('explore-btn').disabled = true;
         document.getElementById('move-btn').disabled = true;
@@ -315,14 +323,14 @@ function resetGame() {
     item = null;
     
     locationNameElement.textContent = currentLocation;
-    locationDescElement.textContent = "Вы находитесь в Беверли Хиллс. Отсюда можно отправиться на поиски скидок и обновок.";
+    locationDescElement.textContent = messages.gameStart;
     
     hideEnemy();
     hideItem();
     showActionButtons();
     logElement.innerHTML = '';
     
-    addLog("Игра сброшена! Вы отправились на маникюр и вернулись обновленной!", 'location-change');
+    addLog(messages.nailsRestart, 'location-change');
     updateStats();
 }
 
@@ -331,4 +339,4 @@ window.pickUpItem = pickUpItem;
 
 
 updateStats();
-addLog("Добро пожаловать в игру 'Barbie vs. Fashion Police'! Начните исследовать мир моды!", 'location-change');
+addLog(messages.welcomeBarbie, 'location-change');
