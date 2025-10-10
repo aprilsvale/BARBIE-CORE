@@ -133,6 +133,7 @@ button:disabled {
     border-left: 3px solid #9921c5;
 }
 
+
 .combat {
     color: #f72585;
 }
@@ -161,4 +162,19 @@ button:disabled {
 
 .item-list {
     margin-top: 10px;
+}
+
+.combat-log::-webkit-scrollbar {
+    width: 10px;
+}
+
+.combat-log::-webkit-scrollbar-track {
+    background: #ca6edc;
+    border-radius: 8px;
+}
+
+.combat-log::-webkit-scrollbar-thumb {
+    background: #af32c7;
+    border-radius: 8px;
+    border: 2px solid #ca6edc;
 }
