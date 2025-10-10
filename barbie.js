@@ -63,12 +63,19 @@ const messages = {
     welcomeBarbie: "Добро пожаловать в игру 'Barbie vs. Fashion Police'! Начните исследовать мир моды!",
 }
 
+
+function calculateEnemyDamage(enemy, player) {
+    return Math.max(1, enemy.strength - Math.floor(Math.random() * player.defense));
+}
+
+
+
 function addLog(message, type = 'normal') {
     const logEntry = document.createElement('div');
     logEntry.className = `log-entry ${type}`;
     logEntry.textContent = message;
-    logElement.appendChild(logEntry);
-    logElement.scrollTop = logElement.scrollHeight;
+    logElement.insertBefore(logEntry, logElement.firstChild);
+    logElement.scrollTop = 0;
 }
 
 
