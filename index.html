@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="barbie.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crafty+Girls&display=swap" rel="stylesheet">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./barbie.css">
+    <title>Barbie vs. Fashion Police</title>
+    <body>
+        <h1>Barbie vs. Fashion Police</h1>
+        <div class="container">
+            <div class="panel stats">
+                <h2>Статистика</h2>
+                <div class="stat-bar">
+                    <div class="stat-label">
+                        <span class="text">Здоровье:</span>
+                        <span id="health">100/100</span>
+                    </div>
+                    <div class="bar">
+                        <div class="fill hp-fill" id="health-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="stat-bar">
+                    <div class="stat-label">
+                        <span class="text">Уровень:</span>
+                        <span id="level">1</span>
+                    </div>
+                </div>
+                
+                <div class="stat-bar">
+                    <div class="stat-label">
+                        <span class="text">Опыт:</span>
+                        <span id="xp">0/100</span>
+                    </div>
+                    <div class="bar">
+                        <div class="fill xp-fill" id="xp-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="stat-bar">
+                    <div class="stat-label">
+                        <span class="text">Сила:</span>
+                        <span id="strength">10</span>
+                    </div>
+                </div>
+                
+                <div class="stat-bar">
+                    <div class="stat-label">
+                        <span class="text">Защита:</span>
+                        <span id="defense">5</span>
+                    </div>
+                </div>
+                
+                <h2>Инвентарь</h2>
+                <div id="inventory">
+                    <div class="inventory-item">Пусто</div>
+                </div>
+            </div>
+            
+            <div class="panel location">
+                <h2>Локация: <span id="location-name">Beauty Salon</span></h2>
+                <p class="location-desc" id="location-desc">Вы находитесь в Беверли Хиллс. Отсюда можно отправиться на поиски скидок и обновок.</p>
+                
+                <div id="enemy-container"></div>
+                <div id="item-container"></div>
+            </div>
+            
+            <div class="panel actions">
+                <h2>Действия</h2>
+                <div id="action-buttons">
+                    <button id="explore-btn">Исследовать</button>
+                    <button id="move-btn">Переместиться</button>
+                    <button id="gossip-btn">Покрысить с подружками</button>
+                    <button id="rest-btn">Обновить макияж</button>
+                </div>
+                
+                <div id="combat-buttons" style="display: none;">
+                    <button id="attack-btn">Поболтать с полицией и защитить свой наряд</button>
+                    <button id="flee-btn">Улизнуть и скрыться</button>
+                </div>
+                
+                <button class="reset-btn" id="reset-btn">Сбросить игру и уйти на маникюр</button>
+            </div>
+            
+            <div class="panel combat-log">
+                <h2>Дорогой дневник...</h2>
+                <div id="log"></div>
+            </div>
+        </div>
+        <script src="barbie.js"></script>
+    </body>
